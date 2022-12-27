@@ -1,20 +1,88 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Blank
+      Bulletin
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        Informations sur le cours
+      </ion-card-title>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+    </ion-card-header>
+    <ion-card-content>
+      <form (ngSubmit)="addNote()" *ngIf="!editing">
+        <ion-item>
+          <ion-label position="floating">Score</ion-label>
+          <ion-input type="number" [(ngModel)]="newNote.score" name="score"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Cours</ion-label>
+          <ion-input placeholder="veuillez saisir le nom du cours" type="text" [(ngModel)]="newNote.course" name="course"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Semestre</ion-label>
+          <ion-input placeholder="saisissez S1 pour semestre 1 par exemple" type="text" [(ngModel)]="newNote.semester" name="semester"></ion-input>
+        </ion-item>
+        <ion-button type="submit" expand="full">Ajouter</ion-button>
+      </form>
+
+      <form (ngSubmit)="saveEdit()" *ngIf="editing">
+        <ion-item>
+          <ion-label>Score</ion-label>
+          <ion-input type="number" [(ngModel)]="editedNote.score" name="score"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Cours</ion-label>
+          <ion-input type="text" [(ngModel)]="editedNote.course" name="course"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Semestre</ion-label>
+          <ion-input type="text" [(ngModel)]="editedNote.semester" name="semester"></ion-input>
+        </ion-item>
+        <ion-button type="submit" expand="full">Modifier</ion-button>
+        <ion-button (click)="cancelEdit()" expand="full">Annuler</ion-button>
+      </form>
+
+    </ion-card-content>
+  </ion-card>
+
+ <ion-card>
+  <ion-card-header>
+    <ion-card-title>
+      Liste des notes
+    </ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-list>
+      <ion-item *ngFor="let note of notes">
+        <ion-label>{{ note.score }} points | {{ note.course }} | {{ note.semester }}</ion-label>
+        <ion-button fill="outline" (click)="deleteNote(note)" >Supprimer</ion-button>
+        <ion-button fill="outline" (click)="editNote(note)">Modifier</ion-button>
+      </ion-item>
+    </ion-list>
+  </ion-card-content>
+ </ion-card>
+
+
+  <ion-card *ngIf="notes.length > 0; else noNotes">
+    <ion-card-header>
+      <ion-card-title>Moyennes</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>Moyenne générale: {{ getAverage() }}</p>
+      <p *ngFor="let semester of semesters">Moyenne du semestre {{ semester }}: {{ getSemesterAverage(semester) }}</p>
+    </ion-card-content>
+  </ion-card>
+  <ng-template #noNotes>
+    <p>Aucune note enregistrée</p>
+  </ng-template>
+
+
+
 </ion-content>
+
