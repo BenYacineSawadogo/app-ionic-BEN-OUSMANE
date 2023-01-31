@@ -26,7 +26,7 @@
         </ion-item>
         <ion-item>
           <ion-label position="floating">Semestre</ion-label>
-          <ion-input placeholder="saisissez S1 pour semestre 1 par exemple" type="text" [(ngModel)]="newNote.semester" name="semester"></ion-input>
+          <ion-input placeholder="saisissez (S1-S10) pour semestre 1 par exemple" type="text" [(ngModel)]="newNote.semester" name="semester"></ion-input>
         </ion-item>
         <ion-button type="submit" expand="full">Ajouter</ion-button>
       </form>
@@ -38,7 +38,7 @@
         </ion-item>
         <ion-item>
           <ion-label>Cours</ion-label>
-          <ion-input type="text" [(ngModel)]="editedNote.course" name="course"></ion-input>
+          <ion-input  placeholder="le nom du cours ne peut etre modifier" type="text" [(ngModel)]="editedNote.course" name="course"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label>Semestre</ion-label>
